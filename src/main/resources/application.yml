@@ -1,0 +1,14 @@
+server:
+  port: 8082
+
+spring:
+  kafka:
+    consumer:
+      group-id: ${KAFKA_CONSUMER_GROUP_ID:geoAdapter}
+    bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS:localhost:9092}
+    topic: ${KAFKA_ADAPTER:msg}
+
+logging:
+  level:
+    org:
+      springframework: ${LOG:info}
