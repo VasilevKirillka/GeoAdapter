@@ -12,3 +12,6 @@ logging:
   level:
     org:
       springframework: ${LOG:info}
+
+myapp:
+  data-source: ${SOURCE:hh}

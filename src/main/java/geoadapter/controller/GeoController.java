@@ -2,6 +2,7 @@ package geoadapter.controller;
 
 import geoadapter.dto.CountryDto;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -14,6 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
+@Slf4j
 @RestController
 @RequestMapping("msg")
 @RequiredArgsConstructor
@@ -23,6 +25,10 @@ public class GeoController {
     private final GeoServiceCsv geoServiceCsv;
     @Value("${spring.kafka.topic}")
     private String geoTopic;
+
+    @Value("${myapp.data-source}")
+    private String dataSource;
+
 
 
     @PutMapping("/load")
@@ -35,11 +41,17 @@ public class GeoController {
 
     private List <CountryDto> addCountry(){
         List<CountryDto> countryDtoList =new ArrayList<>();
-        List<CountryDto> dtoListHh = geoServiceHH.hhGeoLoad();
-//        List<CountryDto> dtoListCsv = geoServiceCsv.csvGeoLoad();
-//        countryDtoList.addAll(dtoListCsv);
-        countryDtoList.addAll(dtoListHh);
-        return countryDtoList;
+        if ("hh".equals(dataSource)) {
+            countryDtoList.addAll(geoServiceHH.hhGeoLoad());
+        } else if ("csv".equals(dataSource)) {
+            countryDtoList.addAll(geoServiceCsv.csvGeoLoad());
+        } else if ("all".equals(dataSource)) {
+            countryDtoList.addAll(geoServiceCsv.csvGeoLoad());
+            countryDtoList.addAll(geoServiceHH.hhGeoLoad());
+        } else {
+            log.info("Выбран неверный ресурс");
+        }
 
+        return countryDtoList;
     }
 }
