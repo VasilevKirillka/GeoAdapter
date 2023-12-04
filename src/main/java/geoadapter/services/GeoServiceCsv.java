@@ -6,6 +6,7 @@ import geoadapter.dto.CityDto;
 import geoadapter.dto.CountryDto;
 import geoadapter.mapper.GeoMapper;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -19,12 +20,12 @@ import java.util.stream.Collectors;
 public class GeoServiceCsv {
 
     private final GeoMapper geoMapper;
-
-    private static final String PATHFILE = "/worldcities.csv";
+    @Value("${myapp.csv-path-file}")
+    private String pathFile;
 
         public List<CountryDto> csvGeoLoad() {
             List<CountryDto> countryDtoList = new ArrayList<>();
-        try (CSVReader reader = new CSVReader(new InputStreamReader(getClass().getResourceAsStream(PATHFILE)))){
+        try (CSVReader reader = new CSVReader(new InputStreamReader(getClass().getResourceAsStream(pathFile)))){
             List<String[]> areas = reader.readAll().stream().skip(1).collect(Collectors.toList());
             for (String[] area : areas) {
                 String country = area[4];
