@@ -18,7 +18,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class GeoServiceHH {
     RestTemplate restTemplate = new RestTemplate();
-    private final static String PATHURL = "https://api.hh.ru/areas";
+    private final static String PATHURL = "https://api.hh.ru/areas"; // вынеси в аппликейшн
     private final GeoMapper geoMapper;
 
     public List<CountryDto> hhGeoLoad() {

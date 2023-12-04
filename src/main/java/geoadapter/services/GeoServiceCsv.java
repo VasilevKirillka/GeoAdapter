@@ -20,7 +20,7 @@ public class GeoServiceCsv {
 
     private final GeoMapper geoMapper;
 
-    private static final String PATHFILE = "/worldcities.csv";
+    private static final String PATHFILE = "/worldcities.csv"; // вынеси в аппликейшн
 
         public List<CountryDto> csvGeoLoad() {
             List<CountryDto> countryDtoList = new ArrayList<>();
