@@ -30,17 +30,16 @@ public class GeoController {
     private String dataSource;
 
 
-
     @PutMapping("/load")
-    public void load(){
-        List <CountryDto> countryDtoList=addCountry();
+    public void load() {
+        List<CountryDto> countryDtoList = addCountry();
         for (CountryDto countryDto : countryDtoList) {
             countryKafkaTemplate.send(geoTopic, countryDto);
         }
     }
 
-    private List <CountryDto> addCountry(){
-        List<CountryDto> countryDtoList =new ArrayList<>();
+    private List<CountryDto> addCountry() {
+        List<CountryDto> countryDtoList = new ArrayList<>();
         if ("hh".equals(dataSource)) {
             countryDtoList.addAll(geoServiceHH.hhGeoLoad());
         } else if ("csv".equals(dataSource)) {

@@ -15,3 +15,5 @@ logging:
 
 myapp:
   data-source: ${SOURCE:hh}
+  csv-path-file: "/worldcities.csv"
+  hh-path-url: "https://api.hh.ru/areas"

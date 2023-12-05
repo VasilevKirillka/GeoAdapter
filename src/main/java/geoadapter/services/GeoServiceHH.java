@@ -7,6 +7,7 @@ import geoadapter.dto.CityDto;
 import geoadapter.dto.CountryDto;
 import lombok.RequiredArgsConstructor;
 import geoadapter.mapper.GeoMapper;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -18,14 +19,15 @@ import java.util.List;
 @RequiredArgsConstructor
 public class GeoServiceHH {
     RestTemplate restTemplate = new RestTemplate();
-    private final static String PATHURL = "https://api.hh.ru/areas"; // вынеси в аппликейшн
+    @Value("${myapp.hh-path-url}")
+    private String pathUrl;
     private final GeoMapper geoMapper;
 
     public List<CountryDto> hhGeoLoad() {
         List<CountryDto> countryDtoList = new ArrayList<>();
 
         try {
-            String data = restTemplate.getForObject(PATHURL, String.class);
+            String data = restTemplate.getForObject(pathUrl, String.class);
             String[][] areas = parseAreas(data);
 
             for (String[] area : areas) {
@@ -33,7 +35,7 @@ public class GeoServiceHH {
                 String city = area[3];
 
                 if (!country.equals("Другие регионы")) {
-                    CountryDto existingCountryDto=geoMapper.findCountryDto(countryDtoList, country);
+                    CountryDto existingCountryDto = geoMapper.findCountryDto(countryDtoList, country);
                     if (existingCountryDto == null) {
                         existingCountryDto = geoMapper.createCountryDto(country);
                         countryDtoList.add(existingCountryDto);
