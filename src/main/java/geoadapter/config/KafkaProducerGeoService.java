@@ -19,7 +19,8 @@ import java.util.Map;
 public class KafkaProducerGeoService {
 
     @Value("${spring.kafka.bootstrap-servers}")
-    private  String kafkaServer;
+    private String kafkaServer;
+
     @Bean
     public Map<String, Object> geoProducerConfigs() {
         Map<String, Object> props = new HashMap<>();

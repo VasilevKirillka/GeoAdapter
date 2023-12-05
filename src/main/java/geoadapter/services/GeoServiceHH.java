@@ -35,7 +35,7 @@ public class GeoServiceHH {
                 String city = area[3];
 
                 if (!country.equals("Другие регионы")) {
-                    CountryDto existingCountryDto=geoMapper.findCountryDto(countryDtoList, country);
+                    CountryDto existingCountryDto = geoMapper.findCountryDto(countryDtoList, country);
                     if (existingCountryDto == null) {
                         existingCountryDto = geoMapper.createCountryDto(country);
                         countryDtoList.add(existingCountryDto);

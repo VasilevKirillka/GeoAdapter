@@ -23,16 +23,16 @@ public class GeoServiceCsv {
     @Value("${myapp.csv-path-file}")
     private String pathFile;
 
-        public List<CountryDto> csvGeoLoad() {
-            List<CountryDto> countryDtoList = new ArrayList<>();
-        try (CSVReader reader = new CSVReader(new InputStreamReader(getClass().getResourceAsStream(pathFile)))){
+    public List<CountryDto> csvGeoLoad() {
+        List<CountryDto> countryDtoList = new ArrayList<>();
+        try (CSVReader reader = new CSVReader(new InputStreamReader(getClass().getResourceAsStream(pathFile)))) {
             List<String[]> areas = reader.readAll().stream().skip(1).collect(Collectors.toList());
             for (String[] area : areas) {
                 String country = area[4];
                 String city = area[0];
 
                 if (countryDel(country)) {
-                    CountryDto existingCountryDto=geoMapper.findCountryDto(countryDtoList, country);
+                    CountryDto existingCountryDto = geoMapper.findCountryDto(countryDtoList, country);
                     if (existingCountryDto == null) {
                         existingCountryDto = geoMapper.createCountryDto(country);
                         countryDtoList.add(existingCountryDto);
@@ -45,11 +45,11 @@ public class GeoServiceCsv {
             e.printStackTrace();
         }
 
-            return countryDtoList;
-        }
+        return countryDtoList;
+    }
 
 
-    private boolean countryDel(String country){
+    private boolean countryDel(String country) {
         return !(country.equals("Ukraine")
                 || country.equals("Russia")
                 || country.equals("Belarus"));

@@ -8,6 +8,6 @@ import org.springframework.kafka.annotation.EnableKafka;
 @SpringBootApplication
 public class GeoAdapter {
     public static void main(String[] args) {
-            SpringApplication.run(GeoAdapter.class, args);
+        SpringApplication.run(GeoAdapter.class, args);
     }
 }
